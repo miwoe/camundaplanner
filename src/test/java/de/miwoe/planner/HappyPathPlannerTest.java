@@ -62,8 +62,10 @@ public class HappyPathPlannerTest {
 
         caseService.setVariable(caseInstance.getId(), "finished", true);
         Thread.sleep(500);
+        caseInstance = caseService.createCaseInstanceQuery().singleResult();
+        assertThat(caseInstance.isTerminated()).isEqualTo(true);
         System.out.println(processEngine.getHistoryService().createHistoricCaseActivityInstanceQuery().list());
         HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
-        assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
+        assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
     }
 }
