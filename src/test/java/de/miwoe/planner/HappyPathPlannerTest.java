@@ -5,6 +5,8 @@ import org.camunda.bpm.engine.CaseService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.exception.NotAllowedException;
+import org.camunda.bpm.engine.exception.cmmn.CaseIllegalStateTransitionException;
 import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
@@ -64,6 +66,17 @@ public class HappyPathPlannerTest {
         Thread.sleep(500);
         caseInstance = caseService.createCaseInstanceQuery().singleResult();
         assertThat(caseInstance.isTerminated()).isEqualTo(true);
+        try {
+            caseService.completeCaseExecution(caseInstance.getId());
+        } catch (Throwable e) {
+            assertThat(e).isInstanceOf(NotAllowedException.class);
+            assertThat(e.getCause()).isInstanceOf(CaseIllegalStateTransitionException.class);
+        }
+
+        assertThat(caseInstance.isTerminated()).isEqualTo(true);
+        caseService.closeCaseInstance(caseInstance.getId());
+        caseInstance = caseService.createCaseInstanceQuery().singleResult();
+        assertThat(caseInstance).isNull();
         System.out.println(processEngine.getHistoryService().createHistoricCaseActivityInstanceQuery().list());
         HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
         assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
