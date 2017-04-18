@@ -1,13 +1,16 @@
 package de.miwoe.planner;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import org.camunda.bpm.engine.CaseService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,9 @@ public class HappyPathPlannerTest {
     CaseService caseService;
 
     @Autowired
+    TaskService taskService;
+
+    @Autowired
     ProcessEngine processEngine;
 
     @Test
@@ -49,7 +55,9 @@ public class HappyPathPlannerTest {
 
         CaseInstance caseInstance = processEngine.getCaseService().createCaseInstanceQuery().caseDefinitionKey("case_planner").singleResult();
         List<CaseExecution> caseExecutionList = processEngine.getCaseService().createCaseExecutionQuery().caseDefinitionKey("case_planner").list();
-
+        Thread.sleep(500);
+        Task task = taskService.createTaskQuery().taskDefinitionKey("PlanItem_0lcgevm").singleResult();
+        taskService.complete(task.getId());
 //        caseService.completeCaseExecution(caseInstance.getId());
 
         caseService.setVariable(caseInstance.getId(), "finished", true);
