@@ -46,15 +46,15 @@ public class HappyPathPlannerTest {
     public void test() throws InterruptedException {
 
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("starter");
-        List<Execution> executionList = runtimeService.createExecutionQuery().list();
-        for (Execution execution : executionList)  {
-
-        }
+//        List<Execution> executionList = runtimeService.createExecutionQuery().list();
+//        for (Execution execution : executionList)  {
+//
+//        }
         System.out.println(processInstance.getId());
         Thread.sleep(500);
 
         CaseInstance caseInstance = processEngine.getCaseService().createCaseInstanceQuery().caseDefinitionKey("case_planner").singleResult();
-        List<CaseExecution> caseExecutionList = processEngine.getCaseService().createCaseExecutionQuery().caseDefinitionKey("case_planner").list();
+//        List<CaseExecution> caseExecutionList = processEngine.getCaseService().createCaseExecutionQuery().caseDefinitionKey("case_planner").list();
         Thread.sleep(500);
         Task task = taskService.createTaskQuery().taskDefinitionKey("PlanItem_0lcgevm").singleResult();
         taskService.complete(task.getId());
