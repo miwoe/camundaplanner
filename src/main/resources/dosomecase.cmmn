@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" id="Test" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="1.7.2">
+  <cmmn:case id="DoSomeCase" name="DoSomeCase">
+    <cmmn:casePlanModel id="DoSomeCasePlan" name="DoSomeCasePlan">
+      <cmmn:planItem id="SomeActivity" name="SomeActivity" definitionRef="ProcessTask_1g58b9m">
+        <cmmn:itemControl id="PlanItemControl_1facetk">
+          <cmmn:repetitionRule id="RepetitionRule_0p99mda" camunda:repeatOnStandardEvent="manualStart">
+            <cmmn:condition id="Expression_1i83lt5">${true}</cmmn:condition>
+          </cmmn:repetitionRule>
+          <cmmn:manualActivationRule id="ManualActivationRule_0h8t09u" />
+        </cmmn:itemControl>
+      </cmmn:planItem>
+      <cmmn:processTask id="ProcessTask_1g58b9m" processRef="SomeActivity">
+        <cmmn:extensionElements>
+          <camunda:in businessKey="#{caseExecution.caseBusinessKey}" />
+        </cmmn:extensionElements>
+      </cmmn:processTask>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+  <cmmndi:CMMNDI>
+    <cmmndi:CMMNDiagram id="DoSomeCaseGeneral" name="DoSomeCase">
+      <cmmndi:Size xsi:type="dc:Dimension" width="500" height="500" />
+      <cmmndi:CMMNShape id="DI_CasePlanModel_1" cmmnElementRef="DoSomeCasePlan">
+        <dc:Bounds x="114" y="63" width="534" height="389" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0xn5j6s_di" cmmnElementRef="SomeActivity">
+        <dc:Bounds x="299" y="134" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+    </cmmndi:CMMNDiagram>
+  </cmmndi:CMMNDI>
+</cmmn:definitions>

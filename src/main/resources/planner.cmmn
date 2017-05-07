@@ -16,6 +16,11 @@
           <cmmn:requiredRule id="RequiredRule_096evnp" />
         </cmmn:itemControl>
       </cmmn:planItem>
+      <cmmn:planItem id="PlanItem_03xpwgv" definitionRef="HumanTask_1lhsmps">
+        <cmmn:itemControl id="PlanItemControl_1gcj8c6">
+          <cmmn:manualActivationRule id="ManualActivationRule_0liwt9y" />
+        </cmmn:itemControl>
+      </cmmn:planItem>
       <cmmn:sentry id="Sentry_1w79hob">
         <cmmn:planItemOnPart id="PlanItemOnPart_0efowpc" sourceRef="PlanItem_0lcgevm">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
@@ -27,6 +32,7 @@
         <cmmn:extensionElements />
       </cmmn:milestone>
       <cmmn:humanTask id="HumanTask_1ve5jyt" name="DoIt" />
+      <cmmn:humanTask id="HumanTask_1lhsmps" name="DoItOptional" />
     </cmmn:casePlanModel>
   </cmmn:case>
   <cmmndi:CMMNDI>
@@ -57,6 +63,10 @@
           <dc:Bounds x="670" y="289" width="50" height="12" />
         </cmmndi:CMMNLabel>
       </cmmndi:CMMNEdge>
+      <cmmndi:CMMNShape id="PlanItem_0gwe4x1_di" cmmnElementRef="PlanItem_03xpwgv">
+        <dc:Bounds x="552" y="434" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
     </cmmndi:CMMNDiagram>
   </cmmndi:CMMNDI>
 </cmmn:definitions>

@@ -10,6 +10,9 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0zh004b" sourceRef="taskPlanner" targetRef="EndEvent_0otw8z6" />
     <bpmn:callActivity id="taskPlanner" name="Start Planner" camunda:caseRef="case_planner">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{execution.processBusinessKey}" />
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0e45nvm</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0zh004b</bpmn:outgoing>
     </bpmn:callActivity>

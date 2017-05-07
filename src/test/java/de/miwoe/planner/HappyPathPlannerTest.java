@@ -45,24 +45,32 @@ public class HappyPathPlannerTest {
     @Test
     public void test() throws InterruptedException {
 
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("starter");
+        final String myBusinessKey = "myBusinessKey";
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("starter", myBusinessKey);
 //        List<Execution> executionList = runtimeService.createExecutionQuery().list();
 //        for (Execution execution : executionList)  {
 //
 //        }
         System.out.println(processInstance.getId());
-        Thread.sleep(500);
 
         CaseInstance caseInstance = processEngine.getCaseService().createCaseInstanceQuery().caseDefinitionKey("case_planner").singleResult();
+
 //        List<CaseExecution> caseExecutionList = processEngine.getCaseService().createCaseExecutionQuery().caseDefinitionKey("case_planner").list();
-        Thread.sleep(500);
+//        Thread.sleep(500);
+
+        CaseInstance caseInstanceByActive = processEngine.getCaseService().createCaseInstanceQuery().active().caseInstanceBusinessKey(myBusinessKey)
+                .singleResult();
+
+        CaseExecution caseExecution = processEngine.getCaseService().createCaseExecutionQuery().caseInstanceBusinessKey(myBusinessKey).enabled().singleResult();
+        processEngine.getCaseService().manuallyStartCaseExecution(caseExecution.getId());
+        List<Task> tasks = taskService.createTaskQuery().caseInstanceBusinessKey(myBusinessKey).list();
         Task task = taskService.createTaskQuery().taskDefinitionKey("PlanItem_0lcgevm").singleResult();
         taskService.complete(task.getId());
-//        caseService.completeCaseExecution(caseInstance.getId());
+//
 
         caseService.setVariable(caseInstance.getId(), "finished", true);
-        Thread.sleep(500);
-        System.out.println(processEngine.getHistoryService().createHistoricCaseActivityInstanceQuery().list());
+
+        caseService.completeCaseExecution(caseInstance.getId());
         HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
         assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
     }
