@@ -207,5 +207,16 @@ public class HappyPathDoSomeTest {
         assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
     }
 
+    @Test
+    public void I_know_If_I_could_start_manual_execution() throws InterruptedException {
+        final String myBusinessKey = UUID.randomUUID().toString();
+        startOne(myBusinessKey);
+
+        CaseExecution caseExecution = processEngine.getCaseService().createCaseExecutionQuery().caseInstanceBusinessKey(myBusinessKey).activityId("SomeActivity").enabled().singleResult();
+
+        assertThat(caseExecution).isNotNull();
+
+    }
+
 
 }
