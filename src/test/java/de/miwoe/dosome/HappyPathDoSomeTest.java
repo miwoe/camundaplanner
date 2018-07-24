@@ -5,6 +5,7 @@ import org.camunda.bpm.engine.CaseService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.exception.NotAllowedException;
 import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 /**
  * Created by Grauschleier on 07.05.2017.
  */
@@ -99,11 +102,11 @@ public class HappyPathDoSomeTest {
         startOne(myBusinessKey);
 
         caseService.completeCaseExecution(caseInstance.getId());
-
         HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
         assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
         caseInstance = processEngine.getCaseService().createCaseInstanceQuery().caseInstanceId(caseInstance.getId()).singleResult();
         assertThat(caseInstance.isActive()).isFalse();
+        caseService.closeCaseInstance(caseInstance.getId());
 
     }
 
@@ -115,10 +118,10 @@ public class HappyPathDoSomeTest {
         startOne(myBusinessKey);
 
         processEngine.getCaseService().manuallyStartCaseExecution(caseExecution.getId());
-
         HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
         assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
 
+        assertThatThrownBy(() -> caseService.closeCaseInstance(caseInstance.getId())).isInstanceOf(NotAllowedException.class);
         terminateCaseInstance();
     }
 
@@ -172,7 +175,6 @@ public class HappyPathDoSomeTest {
 
         processEngine.getCaseService().manuallyStartCaseExecution(caseExecution.getId());
         startSecondExecution(myBusinessKey);
-
         List<Task> tasks = taskService.createTaskQuery().active().list();
         assertThat(tasks).isNotNull();
         for (Task task: tasks) {
@@ -182,6 +184,7 @@ public class HappyPathDoSomeTest {
 
         HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
         assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
+        assertThatThrownBy(() -> caseService.closeCaseInstance(caseInstance.getId())).isInstanceOf(NotAllowedException.class);
         terminateCaseInstance();
     }
 
@@ -192,7 +195,6 @@ public class HappyPathDoSomeTest {
 
         processEngine.getCaseService().manuallyStartCaseExecution(caseExecution.getId());
         startSecondExecution(myBusinessKey);
-
         List<Task> tasks = taskService.createTaskQuery().active().list();
         assertThat(tasks).isNotNull();
         for (Task task: tasks) {
@@ -204,12 +206,13 @@ public class HappyPathDoSomeTest {
         ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         runtimeService.correlateMessage("Abort");
         caseService.completeCaseExecution(caseInstance.getId());
+        caseService.closeCaseInstance(caseInstance.getId());
         HistoricProcessInstance historicProcessInstance = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceId(processInstance.getId()).singleResult();
         assertThat(historicProcessInstance.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
     }
 
     @Test
-    public void I_know_If_I_could_start_manual_execution() throws InterruptedException {
+    public void I_can_start_manual_execution() throws InterruptedException {
         final String myBusinessKey = UUID.randomUUID().toString();
         startOne(myBusinessKey);
 
