@@ -17,6 +17,9 @@
       </cmmn:processTask>
     </cmmn:casePlanModel>
   </cmmn:case>
+  <cmmn:association id="Association_0yjw7dv" sourceRef="SomeActivity" targetRef="TextAnnotation_0jvxgav" />
+  <cmmn:textAnnotation id="TextAnnotation_0jvxgav">  <cmmn:text>Eine Ausführung ist eine CaseExecution</cmmn:text>
+</cmmn:textAnnotation>
   <cmmndi:CMMNDI>
     <cmmndi:CMMNDiagram id="DoSomeCaseGeneral" name="DoSomeCase">
       <cmmndi:Size xsi:type="dc:Dimension" width="500" height="500" />
@@ -28,6 +31,15 @@
         <dc:Bounds x="299" y="134" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="TextAnnotation_0jvxgav_di" cmmnElementRef="TextAnnotation_0jvxgav">
+        <dc:Bounds x="682" y="122" width="181" height="102" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="Association_0yjw7dv_di" cmmnElementRef="Association_0yjw7dv">
+        <di:waypoint xsi:type="dc:Point" x="399" y="174" />
+        <di:waypoint xsi:type="dc:Point" x="682" y="174" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNEdge>
     </cmmndi:CMMNDiagram>
   </cmmndi:CMMNDI>
 </cmmn:definitions>
