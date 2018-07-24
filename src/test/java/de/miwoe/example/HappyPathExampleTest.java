@@ -1,6 +1,7 @@
-package de.miwoe.planner;
+package de.miwoe.example;
 
-import org.camunda.bpm.ProcessEngineService;
+import de.miwoe.TestConfig;
+import de.miwoe.planner.PlannerApplication;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.history.HistoricProcessInstance;
@@ -9,7 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestContextManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.*;
@@ -17,10 +20,10 @@ import static org.assertj.core.api.Assertions.*;
 /**
  * Created by Grauschleier on 15.04.2017.
  */
+@SpringBootTest(classes = PlannerApplication.class)
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @ActiveProfiles("test")
-public class HappyPathExampleTest {
+public class HappyPathExampleTest extends TestConfig {
 
     @Autowired
     RuntimeService runtimeService;

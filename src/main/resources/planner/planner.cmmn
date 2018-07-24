@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" id="Test" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="1.7.2">
+<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" id="Test" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="1.11.3">
   <cmmn:case id="case_planner" name="Planner">
     <cmmn:casePlanModel id="CasePlanModel_1" name="Planner" autoComplete="false">
       <cmmn:extensionElements>
@@ -11,18 +11,18 @@
         </cmmn:itemControl>
         <cmmn:entryCriterion id="EntryCriterion_14d9y62" sentryRef="Sentry_1w79hob" />
       </cmmn:planItem>
-      <cmmn:planItem id="PlanItem_0lcgevm" definitionRef="HumanTask_1ve5jyt">
+      <cmmn:planItem id="PlanItem_DoIt" definitionRef="HumanTask_1ve5jyt">
         <cmmn:itemControl id="PlanItemControl_0rpe3ep">
           <cmmn:requiredRule id="RequiredRule_096evnp" />
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem id="PlanItem_03xpwgv" definitionRef="HumanTask_1lhsmps">
+      <cmmn:planItem id="PlanItem_DoItOptional" definitionRef="HumanTask_1lhsmps">
         <cmmn:itemControl id="PlanItemControl_1gcj8c6">
           <cmmn:manualActivationRule id="ManualActivationRule_0liwt9y" />
         </cmmn:itemControl>
       </cmmn:planItem>
       <cmmn:sentry id="Sentry_1w79hob">
-        <cmmn:planItemOnPart id="PlanItemOnPart_0efowpc" sourceRef="PlanItem_0lcgevm">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+        <cmmn:planItemOnPart id="PlanItemOnPart_0efowpc" sourceRef="PlanItem_DoIt">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
         <cmmn:ifPart id="IfPart_1cxeoxl">
           <cmmn:condition id="Expression_0wffvng"><![CDATA[${caseExecution.getVariable('finished')!=null && caseExecution.getVariable('finished')}]]></cmmn:condition>
@@ -50,7 +50,7 @@
         <dc:Bounds x="738" y="220" width="20" height="28" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNShape id="PlanItem_0raqmoq_di" cmmnElementRef="PlanItem_0lcgevm">
+      <cmmndi:CMMNShape id="PlanItem_0raqmoq_di" cmmnElementRef="PlanItem_DoIt">
         <dc:Bounds x="552" y="324" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
@@ -63,7 +63,7 @@
           <dc:Bounds x="670" y="289" width="50" height="12" />
         </cmmndi:CMMNLabel>
       </cmmndi:CMMNEdge>
-      <cmmndi:CMMNShape id="PlanItem_0gwe4x1_di" cmmnElementRef="PlanItem_03xpwgv">
+      <cmmndi:CMMNShape id="PlanItem_0gwe4x1_di" cmmnElementRef="PlanItem_DoItOptional">
         <dc:Bounds x="552" y="434" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>

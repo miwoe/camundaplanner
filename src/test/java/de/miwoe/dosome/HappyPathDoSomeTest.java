@@ -1,5 +1,6 @@
-package de.miwoe.planner;
+package de.miwoe.dosome;
 
+import de.miwoe.planner.PlannerApplication;
 import org.camunda.bpm.engine.CaseService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
@@ -25,8 +26,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by Grauschleier on 07.05.2017.
  */
+@SpringBootTest(classes = PlannerApplication.class)
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @ActiveProfiles("test")
 public class HappyPathDoSomeTest {
 
